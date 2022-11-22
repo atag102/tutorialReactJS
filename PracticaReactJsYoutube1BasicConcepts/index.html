@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men in thec</title>
+    <style>
+        picture{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            width: 100px;
+        }
+        picture.is-small{
+            width: 50px;
+        }
+        picture.is-large{
+            width: 200px;
+        }
+        img {
+            box-shadow: 0 0 15px #999;
+            border-radius: 50%;
+            width: 100%;
+        }
+
+        img.disabled{
+            opacity: 0.3;
+        }
+    </style>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <h1>Men in thec</h1>
+    <div id="app">
+
+    </div>
+
+    <script type="text/babel">
+        const $app=document.getElementById("app");
+        const {useState}=React;
+
+        const Avatar=params=>{
+            const [enabled,setEnabled] =useState(true);
+            const src=`https://randomuser.me/api/portraits/men/${params.id}.jpg`
+            const className =enabled ? "" : "disabled"
+            let SI="";
+
+            if(params.size==="small"){
+                SI="is-small"
+            }else if(params.size==="large"){
+                SI="is-large"
+            }
+            //Esto es la manera sin JSX
+            //return h("img",{src})
+
+            //Esto es la forma con JSX
+            return (
+                <picture className={SI}>
+                    {params.nombre}
+                    <img src={src} onClick={()=>{setEnabled(!enabled)}} className={className}/>
+                </picture>
+                )
+            };
+
+        //Esto es la manera sin JSX
+        //ReactDOM.render(h(Avatar,{id:1}), $app); El segundo comando de ReactDOM.render define donde se 
+                                                // dibujara el componente
+        
+        //Esto es la forma con JSX
+        ReactDOM.render(
+            <div>
+                <Avatar id={10} nombre="A" size="small"/>
+                <Avatar id={20} nombre="B"/>
+                <Avatar id={30} nombre="B" size="large"/>
+            </div>,$app
+        )
+        
+    </script>
+</body>
+</html>
